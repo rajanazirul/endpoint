@@ -67,7 +67,7 @@ WSGI_APPLICATION = 'endpoint.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'studybud',
+        'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'password',
         'HOST': 'localhost',
