@@ -1,31 +1,9 @@
-version: '3.8'
 services:
-  db:
-    image: postgres:14.1-alpine
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=studybud
+  cloud-sql:
+    # to use the proxy, create an .env file in the same directory as this file with the following 2 variables
+    # CLOUD_SQL_INSTANCE - the cloud sql instance name eg. asia-souteast1:myinstance
+    # CLOUD_SQL_TOKEN - the access token from gcloud cli command (gcloud auth print-access-token)
+    image: gcr.io/cloudsql-docker/gce-proxy:1.23.1
     ports:
-      - '5432:5432'
-    volumes: 
-      - db:/var/lib/postgresql/data
-
-  web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
-    ports:
-      - "8000:8000"
-    environment:
-      - POSTGRES_NAME=studybud
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-    depends_on:
-      - db
-
-volumes:
-  db:
-    driver: local
+      - '127.0.0.1:5432:5432'
+    entrypoint: /cloud_sql_proxy -instances=${CLOUD_SQL_INSTANCE}=tcp:0.0.0.0:5432 -token=${CLOUD_SQL_TOKEN}
