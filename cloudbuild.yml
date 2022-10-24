@@ -1,8 +1,8 @@
 steps :
   - name : 'gcr.io/kaniko-project/executor:v1.6.0'
     args :
-      - '--destination=asia.gcr.io/$PROJECT_ID/endpoint:latest'
-      - '--destination=asia.gcr.io/$PROJECT_ID/endpoint:$SHORT_SHA'
+      - '--destination=asia.gcr.io/pacer-demo/endpoint:latest'
+      - '--destination=asia.gcr.io/pacer-demo/endpoint:$SHORT_SHA'
       - '--cache=true'
   - name : 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint : gcloud
@@ -11,7 +11,7 @@ steps :
       - 'deploy'
       - 'endpoint'
       - '--image'
-      - 'asia.gcr.io/$PROJECT_ID/endpoint:$SHORT_SHA'
+      - 'asia.gcr.io/pacer-demo/endpoint:$SHORT_SHA'
       - '--region'
       - 'asia-southeast1'
       - '--platform'
